@@ -63,7 +63,7 @@ Here an example of how to use this role in your playbooks:
 
   vars:
     install_ros2_distro: "dashing"
-    install_ros2_distro: "desktop"
+    install_ros2: "desktop"
 ```
 
 ## :guardsman: License
