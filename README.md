@@ -1,7 +1,7 @@
 install-ros2-ubuntu
 ===================
 
-[![Build Status](https://travis-ci.org/itnok/ansible-role-install-ros2-ubuntu.svg?branch=master)](https://travis-ci.org/itnok/ansible-role-install-ros2-ubuntu) [![GitHub tag](https://img.shields.io/github/v/tag/itnok/ansible-role-install-ros2-ubuntu?sort=semver)](https://github.com/itnok/ansible-role-install-ros2-ubuntu/tags/) [![Ansible Role](https://img.shields.io/ansible/role/47440)](https://galaxy.ansible.com/itnok/install_ros2_ubuntu)
+[![Build Status](https://travis-ci.org/itnok/ansible-role-install-ros2-ubuntu.svg?branch=master)](https://travis-ci.org/itnok/ansible-role-install-ros2-ubuntu) [![GitHub tag](https://img.shields.io/github/v/tag/itnok/ansible-role-install-ros2-ubuntu?sort=semver)](https://github.com/itnok/ansible-role-install-ros2-ubuntu/tags/) [![Ansible Role](https://img.shields.io/ansible/role/47486)](https://galaxy.ansible.com/itnok/install_ros2_ubuntu)
 
 Install ROS2 on an Ubuntu host.
 
