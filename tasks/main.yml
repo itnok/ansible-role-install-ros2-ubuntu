@@ -1,0 +1,42 @@
+---
+# tasks file for ansible-role-install-ros2-ubuntu
+- include_vars: "main.yml"
+
+- name: "Gather facts"
+  setup:    # equivalent to "gather_facts: yes"
+
+- name: "Install ROS2 '{{ install_ros2_distro }}'"
+  include_role:
+    name: itnok.manage_pkg_ubuntu
+  vars:
+    install_dependency:
+      - "curl"
+      - "gnupg2"
+      - "lsb-release"
+      - "python3-pexpect"
+    manage_pkg_dependency: "{{ __manage_pkg_dependency + install_dependency }}"
+    manage_pkg_key:
+      - { url: "https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc", key: "" }
+    manage_pkg_repo:
+      - "deb http://packages.ros.org/ros2/ubuntu bionic main"
+    manage_pkg_app:
+      - "ros-{{ install_ros2_distro }}-{{ install_ros2 }}"
+      - "ros-{{ install_ros2_distro }}-ros1-bridge"
+      - "python3-argcomplete"
+
+- name: "Gather the apt package facts"
+  package_facts:
+    manager: auto
+
+- name: "Install RTI Connext DDS & middleware for ROS2 if not present"
+  expect:
+    command: "apt install -y --install-recommends ros-{{ install_ros2_distro }}-rmw-connext-cpp"
+    responses:
+      "--More--": [ " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
+      "Do you accept the terms of this license agreement.*":
+        - "yes"
+        - "yes"
+    echo: true
+    timeout: 300
+  when: ansible_facts.packages["ros-{{ install_ros2_distro }}-rmw-connext-cpp"] is not defined
+
