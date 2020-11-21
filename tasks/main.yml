@@ -1,9 +1,20 @@
 ---
 # tasks file for ansible-role-install-ros2-ubuntu
-- include_vars: "main.yml"
+- name: "Include role variables"
+  include_vars: "main.yml"
 
 - name: "Gather facts"
   setup:    # equivalent to "gather_facts: yes"
+
+- name: "Check ROS2 compatibilty with current OS"
+  assert:
+    that:
+      - install_ros2_distro == "{{ item.ros2_distro }}"
+    fail_msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }} does NOT support ROS {{ install_ros2_distro }}"
+  when: ansible_distribution_release == item.os_release
+  with_items:
+    - { os_release: "bionic", ros2_distro: "dashing" }
+    - { os_release: "focal", ros2_distro: "foxy" }
 
 - name: "Install ROS2 '{{ install_ros2_distro }}'"
   include_role:
@@ -18,10 +29,9 @@
     manage_pkg_key:
       - { url: "https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc", key: "" }
     manage_pkg_repo:
-      - "deb http://packages.ros.org/ros2/ubuntu bionic main"
+      - "deb http://packages.ros.org/ros2/ubuntu {{ ansible_distribution_release }} main"
     manage_pkg_app:
       - "ros-{{ install_ros2_distro }}-{{ install_ros2 }}"
-      - "ros-{{ install_ros2_distro }}-ros1-bridge"
       - "python3-argcomplete"
 
 - name: "Gather the apt package facts"
@@ -44,4 +54,3 @@
     echo: true
     timeout: 600
   when: ansible_facts.packages[install_ros2_rti_connext_pkg] is not defined
-

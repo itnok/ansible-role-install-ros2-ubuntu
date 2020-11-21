@@ -1,3 +1,3 @@
 ---
-    roles:
-      - src: itnok.manage_pkg_ubuntu
+roles:
+  - src: itnok.manage_pkg_ubuntu
