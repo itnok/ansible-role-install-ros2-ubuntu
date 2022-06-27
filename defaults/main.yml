@@ -1,4 +1,6 @@
 ---
 # defaults file for ansible-role-install-ros2-ubuntu
-install_ros2_distro: "dashing"
+install_ros2_distro: "galactic"
 install_ros2: "ros-base"
+install_ros2_rti_connext: true
+install_ros2_rti_fastrtps: false
